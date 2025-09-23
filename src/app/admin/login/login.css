@@ -1,0 +1,66 @@
+/* Container da tela inteira */
+.login-page {
+  display: flex;
+  justify-content: center;  /* centraliza horizontal */
+  align-items: center;      /* centraliza vertical */
+  height: 100vh;            /* altura da tela inteira */
+  width: 100%;
+  background: #f0f2f5;      /* fundo leve, opcional */
+  position: relative;       /* para z-index, se necessário */
+}
+
+/* Card do login */
+.login-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 3rem 2rem;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  z-index: 10;  /* acima de outros elementos */
+}
+
+/* Título */
+.login-container h1 {
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+  color: #222;
+}
+
+/* Input */
+.login-container input {
+  width: 100%;
+  padding: 0.9rem;
+  margin: 0.7rem 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+/* Botão */
+.login-container button {
+  width: 100%;
+  padding: 0.9rem;
+  margin-top: 1rem;
+  border: none;
+  border-radius: 8px;
+  background: #0070f3;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background 0.3s;
+}
+
+.login-container button:hover {
+  background: #005bb5;
+}
+
+/* Mensagem */
+.message {
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: #333;
+}

@@ -1,0 +1,79 @@
+.lojas {
+  background:linear-gradient(rgba(0, 0, 0, 0.37), rgba(0,0,0,0.5)),url('../../../public/foto-lojas.jpg');
+  background-size: cover;
+  background-position: center;  
+  min-height: 100vh;
+  padding: 160px 40px 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lojas-container {
+  width: 100%;
+  max-width: 1200px;
+}
+
+.lojas-titulo {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  color: white;
+}
+
+.grid-lojas {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.loja-card {
+  background: rgba(255, 255, 255, 0.842);
+  padding: 2rem;
+  border-radius: 10px;
+  text-align: left;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  line-height: 1.8;
+  box-sizing: border-box;
+}
+
+.loja-card h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #cc3535;
+}
+
+.loja-card p {
+  margin-bottom: 0.7rem;
+  font-size: 1.4rem;
+  color: #333;
+}
+
+.botao-maps {
+  display: inline-block;
+  margin-top: 1.5rem;
+  background-color:#172027ea;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 1.3rem;
+  transition: background 0.3s ease;
+}
+
+.botao-maps:hover {
+  background-color: #cc3535;
+}
+
+/* Responsivo para tablets e celulares */
+@media (max-width: 1024px) {
+  .grid-lojas {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-lojas {
+    grid-template-columns: 1fr;
+  }
+}

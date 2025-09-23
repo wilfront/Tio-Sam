@@ -1,0 +1,117 @@
+.contato {
+  background: linear-gradient(rgba(0, 0, 0, 0.37), rgba(0,0,0,0.5)), url('../../../public/foto-contato.png');
+  background-size: cover;
+  background-position: center;
+  color: #222;
+  min-height: 170vh;
+  padding: 160px 40px 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contato-container {
+  max-width: 700px;
+  width: 100%;
+  background: #172027ea;
+  padding: 3rem;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.contato-titulo {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: white;
+  text-align: center;
+}
+
+.contato-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.contato-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.4rem;
+  color: white;
+}
+
+/* Inputs, textarea e telefone */
+.contato-form input[type="text"],
+.contato-form input[type="email"],
+.contato-form input[type="tel"],
+.contato-form textarea {
+  padding: 0.8rem 1rem;
+  font-size: 1.4rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-top: 0.5rem;
+}
+
+.contato-form input:focus,
+.contato-form textarea:focus {
+  border-color: white;
+  outline: none;
+}
+
+.contato-form select {
+  padding: 0.8rem 1rem;
+  font-size: 1.4rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-top: 0.5rem;
+  background-color: #172027;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg%20width%3D'24'%20height%3D'24'%20viewBox%3D'0%200%2024%2024'%20xmlns%3D'http://www.w3.org/2000/svg'%3E%3Cpath%20fill%3D'white'%20d%3D'M7%2010l5%205%205-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 2rem;
+}
+
+.contato-form select:focus {
+  border-color: white;
+  outline: none;
+}
+
+.contato-form button {
+  background-color: #EF9D00;
+  color: white;
+  padding: 1rem 1.5rem;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.contato-form button:hover {
+  background-color: #cc3535;
+}
+
+/* Mensagem de status do formulário */
+.form-status {
+  margin-top: 1rem;
+  padding: 0.8rem 1rem;
+  border-radius: 6px;
+  font-size: 1.3rem;
+  text-align: center;
+  font-weight: bold;
+  color: white;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.form-status-success {
+  background-color: #28a745;
+}
+
+.form-status-error {
+  background-color: #dc3545;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
