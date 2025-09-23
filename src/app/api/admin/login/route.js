@@ -9,14 +9,14 @@ export async function POST(req) {
       return new Response(JSON.stringify({ error: "Email é obrigatório" }), { status: 400 });
     }
 
-    // **Permitir apenas o e-mail do seu cliente**
+    // Permitir apenas o e-mail do seu cliente
     const allowedEmail = "carvalhononi@gmail.com";
     if (email !== allowedEmail) {
       return new Response(JSON.stringify({ error: "E-mail não autorizado" }), { status: 403 });
     }
 
     const actionCodeSettings = {
-      url: 'http://localhost:3000/admin/dashboard',
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/admin/dashboard`,
       handleCodeInApp: true,
     };
 
