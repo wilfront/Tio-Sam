@@ -1,10 +1,12 @@
 'use client';
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import './login.css';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,15 +16,19 @@ export default function LoginPage() {
     }
 
     try {
-      const res = await fetch('/api/admin/login', {
+      // Usa a variável de ambiente
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
       });
+
       const data = await res.json();
+
       if (data.ok) {
-        setMessage("Link enviado! Verifique seu e-mail.");
         localStorage.setItem('emailForSignIn', email);
+        setMessage("Login realizado com sucesso! Redirecionando...");
+        router.push('/dashboard'); // redireciona para o dashboard
       } else {
         setMessage(`Erro: ${data.error}`);
       }
@@ -42,7 +48,7 @@ export default function LoginPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <button type="submit">Enviar Link Mágico</button>
+          <button type="submit">Entrar</button>
         </form>
         {message && <p className="message">{message}</p>}
       </div>
