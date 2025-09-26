@@ -1,12 +1,10 @@
 'use client';
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import './login.css';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
-  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,8 +14,7 @@ export default function LoginPage() {
     }
 
     try {
-      // Usa a variável de ambiente
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/login`, {
+      const res = await fetch("/api/admin/login", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
@@ -26,9 +23,9 @@ export default function LoginPage() {
       const data = await res.json();
 
       if (data.ok) {
+        // guarda o email para usar depois no callback
         localStorage.setItem('emailForSignIn', email);
-        setMessage("Login realizado com sucesso! Redirecionando...");
-        router.push('/dashboard'); // redireciona para o dashboard
+        setMessage("Um link de login foi enviado para o seu e-mail.");
       } else {
         setMessage(`Erro: ${data.error}`);
       }

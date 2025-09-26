@@ -1,0 +1,36 @@
+"use client";
+
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { auth } from "@/lib/firebase";
+import { isSignInWithEmailLink, signInWithEmailLink } from "firebase/auth";
+
+export default function CallbackPage() {
+  const router = useRouter();
+
+  useEffect(() => {
+    async function confirmLogin() {
+      if (isSignInWithEmailLink(auth, window.location.href)) {
+        let email = window.localStorage.getItem("emailForSignIn");
+
+        if (!email) {
+          email = window.prompt("Digite seu e-mail novamente:");
+        }
+
+        try {
+          await signInWithEmailLink(auth, email, window.location.href);
+          window.localStorage.removeItem("emailForSignIn");
+          router.push("/admin/dashboard"); // agora sim redireciona
+        } catch (error) {
+          console.error("Erro no login mágico:", error);
+          alert("Erro ao autenticar. Tente novamente.");
+          router.push("/");
+        }
+      }
+    }
+
+    confirmLogin();
+  }, [router]);
+
+  return <p>Validando login mágico...</p>;
+}
