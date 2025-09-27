@@ -16,7 +16,7 @@ export default function CallbackPage() {
         try {
           await signInWithEmailLink(auth, email, window.location.href);
           window.localStorage.removeItem("emailForSignIn");
-          router.push("/admin/dashboard");
+          router.push(`${process.env.NEXT_PUBLIC_BASE_URL}/admin/dashboard`);
         } catch (error) {
           console.error(error);
           alert("Erro ao autenticar. Tente novamente.");

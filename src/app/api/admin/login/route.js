@@ -26,9 +26,10 @@ export async function POST(req) {
 
     // URL de callback (precisa estar autorizada no Firebase)
     const actionCodeSettings = {
-      url: `${baseUrl}/auth/callback`,
+      url: "https://tio-sam.vercel.app/auth/callback",
       handleCodeInApp: true,
     };
+
 
     console.log("URL usada no Firebase:", actionCodeSettings.url);
 
