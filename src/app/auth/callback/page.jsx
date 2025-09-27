@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { auth } from "@/lib/firebase";
@@ -12,17 +11,14 @@ export default function CallbackPage() {
     async function confirmLogin() {
       if (isSignInWithEmailLink(auth, window.location.href)) {
         let email = window.localStorage.getItem("emailForSignIn");
-
-        if (!email) {
-          email = window.prompt("Digite seu e-mail novamente:");
-        }
+        if (!email) email = window.prompt("Digite seu e-mail:");
 
         try {
           await signInWithEmailLink(auth, email, window.location.href);
           window.localStorage.removeItem("emailForSignIn");
-          router.push("/admin/dashboard"); // agora sim redireciona
+          router.push("/admin/dashboard");
         } catch (error) {
-          console.error("Erro no login mágico:", error);
+          console.error(error);
           alert("Erro ao autenticar. Tente novamente.");
           router.push("/");
         }
