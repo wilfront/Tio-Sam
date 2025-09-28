@@ -1,36 +1,29 @@
 'use client';
 import { useState } from "react";
+import { auth } from "@/lib/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { useRouter } from "next/navigation";
 import './login.css';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
   const [message, setMessage] = useState('');
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!email) {
-      setMessage("Informe um e-mail válido.");
+    if (!email || !senha) {
+      setMessage("Informe e-mail e senha.");
       return;
     }
 
     try {
-      const res = await fetch("/api/admin/login", {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      });
-
-      const data = await res.json();
-
-      if (data.ok) {
-        // guarda o email para usar depois no callback
-        localStorage.setItem('emailForSignIn', email);
-        setMessage("Um link de login foi enviado para o seu e-mail.");
-      } else {
-        setMessage(`Erro: ${data.error}`);
-      }
+      await signInWithEmailAndPassword(auth, email, senha);
+      router.push("/admin/dashboard");
     } catch (err) {
-      setMessage(`Erro: ${err.message}`);
+      console.error(err);
+      setMessage("Erro ao fazer login: " + err.message);
     }
   };
 
@@ -43,7 +36,13 @@ export default function LoginPage() {
             type="email"
             placeholder="Seu e-mail"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={e => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Sua senha"
+            value={senha}
+            onChange={e => setSenha(e.target.value)}
           />
           <button type="submit">Entrar</button>
         </form>

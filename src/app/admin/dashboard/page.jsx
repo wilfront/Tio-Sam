@@ -1,8 +1,8 @@
-"use client";
+'use client';
 import { useEffect, useState } from "react";
-import { isSignInWithEmailLink, signInWithEmailLink } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 import { collection, query, orderBy, onSnapshot, addDoc, serverTimestamp, doc, deleteDoc } from "firebase/firestore";
-import { db, auth } from "@/lib/firebase";
+import { db } from "@/lib/firebase";
 import "./dashboard.css";
 
 export default function Dashboard() {
@@ -12,18 +12,10 @@ export default function Dashboard() {
   const [pdfs, setPdfs] = useState([]);
   const [mensagens, setMensagens] = useState([]);
 
+  // Observa usuário logado
   useEffect(() => {
-    // Login mágico
-    const email = window.localStorage.getItem("emailForSignIn");
-    if (email && isSignInWithEmailLink(auth, window.location.href)) {
-      signInWithEmailLink(auth, email, window.location.href)
-        .then(result => {
-          setUser(result.user);
-          localStorage.removeItem("emailForSignIn");
-        })
-        .catch(console.error);
-    }
-
+    const unsubscribeAuth = auth.onAuthStateChanged(u => setUser(u));
+    
     // Observa PDFs
     const qPdfs = query(collection(db, "cardapio"), orderBy("updatedAt", "desc"));
     const unsubscribePdfs = onSnapshot(qPdfs, snapshot => {
@@ -37,6 +29,7 @@ export default function Dashboard() {
     });
 
     return () => {
+      unsubscribeAuth();
       unsubscribePdfs();
       unsubscribeMensagens();
     };
@@ -103,34 +96,30 @@ export default function Dashboard() {
     }
   };
 
+  if (!user) return <p className="login-message">Você precisa estar logado para acessar o dashboard.</p>;
+
   return (
     <div className="dashboard-container">
       <h1>Painel Admin</h1>
 
-      {/* Formulário de upload de PDF */}
       <form onSubmit={handleUpload} className="upload-form">
         <input
           type="file"
           accept="application/pdf"
           onChange={e => setFile(e.target.files[0])}
         />
-        <button type="submit" disabled={uploading || !user}>
+        <button type="submit" disabled={uploading}>
           {uploading ? "Enviando..." : "Enviar PDF"}
         </button>
       </form>
 
-      {!user && <p className="login-message">Aguardando login mágico...</p>}
-
-      {/* Lista de PDFs */}
       {pdfs.length > 0 && (
         <div className="pdf-list">
           <h2>PDFs enviados:</h2>
           <ul>
             {pdfs.map(pdf => (
               <li key={pdf.id} className="pdf-item">
-                <a href={pdf.pdfUrl} target="_blank" rel="noopener noreferrer">
-                  Visualizar PDF
-                </a>
+                <a href={pdf.pdfUrl} target="_blank" rel="noopener noreferrer">Visualizar PDF</a>
                 <button onClick={() => handleDeletePdf(pdf)}>Excluir</button>
               </li>
             ))}
@@ -138,7 +127,6 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* Lista de mensagens */}
       {mensagens.length > 0 && (
         <div className="mensagens-list">
           <h2>Mensagens recebidas:</h2>
