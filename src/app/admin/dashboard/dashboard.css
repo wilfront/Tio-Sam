@@ -174,7 +174,7 @@
 /* Celulares */
 @media (max-width: 480px) {
   .dashboard-container {
-    padding-top: 5rem;
+    padding-top: 20rem;
     gap: 1rem;
   }
 

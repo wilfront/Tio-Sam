@@ -51,7 +51,6 @@ export default function CardapioPage() {
                   <a href={pdfUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
                     📥 {fileName}
                   </a>
-                  <span className="text-gray-500 ml-2">{formatDate(updatedAt)}</span>
                 </li>
               );
             })}
